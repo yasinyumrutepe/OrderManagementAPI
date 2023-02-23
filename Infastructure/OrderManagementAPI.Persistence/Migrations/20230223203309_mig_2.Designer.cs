@@ -12,8 +12,8 @@ using OrderManagementAPI.Persistence.Context;
 namespace OrderManagementAPI.Persistence.Migrations
 {
     [DbContext(typeof(OrderManagementAPIDbContext))]
-    [Migration("20230222214344_mig_1")]
-    partial class mig_1
+    [Migration("20230223203309_mig_2")]
+    partial class mig_2
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -72,6 +72,10 @@ namespace OrderManagementAPI.Persistence.Migrations
 
                     b.Property<DateTime>("CreatedAt")
                         .HasColumnType("datetime2");
+
+                    b.Property<string>("OrderTime")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("OrdererName")
                         .IsRequired()

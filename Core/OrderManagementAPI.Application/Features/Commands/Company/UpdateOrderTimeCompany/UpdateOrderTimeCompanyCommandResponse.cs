@@ -8,5 +8,13 @@ namespace OrderManagementAPI.Application.Features.Commands.Company.UpdateOrderTi
 {
     public class UpdateOrderTimeCompanyCommandResponse
     {
+        public Domain.Entities.Company Model { get; set; }
+
+      
+        public string Message { get; set; }
+
+        public bool IsUpdate { get; set; }
+
+
     }
 }

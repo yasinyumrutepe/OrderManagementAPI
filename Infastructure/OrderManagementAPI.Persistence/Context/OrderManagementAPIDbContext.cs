@@ -21,21 +21,7 @@ namespace OrderManagementAPI.Persistence.Context
         public DbSet<Order> Orders { get; set; }
 
 
-        public override async Task<int> SaveChangesAsync(CancellationToken cancellationToken = default)
-        {
-
-
-            var datas = ChangeTracker.Entries<BaseEntity>();
-            foreach (var entry in datas)
-            {
-                 _ = entry.State switch
-                {
-                    EntityState.Added => entry.Entity.CreatedAt = DateTime.UtcNow,
-                    EntityState.Modified => entry.Entity.UpdatedAt = DateTime.UtcNow,
-                };
-            }
-            return await base.SaveChangesAsync(cancellationToken);
-        }
+       
 
 
 

@@ -23,7 +23,7 @@ namespace OrderManagementAPI.Application.Features.Queries.Company.GetAllCompany
         public Task<GetAllCompanyQueryResponse> Handle(GetAllCompanyQueryRequest request, CancellationToken cancellationToken)
         {
             var result = _companyReadRepository.GetAll();
-            return _mapper.Map<List<GetAllCompanyQueryResponse>>(result);
+            return (Task<GetAllCompanyQueryResponse>)result;
         }
     }
 }

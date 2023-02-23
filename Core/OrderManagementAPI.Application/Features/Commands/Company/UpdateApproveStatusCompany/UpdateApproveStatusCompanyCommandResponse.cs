@@ -8,5 +8,10 @@ namespace OrderManagementAPI.Application.Features.Commands.Company.UpdateApprove
 {
     public class UpdateApproveStatusCompanyCommandResponse
     {
+        public Domain.Entities.Company Model { get; set; }
+        public bool ApproveStatus { get; set; }
+
+        public bool IsUpdate { get; set; } 
+        public string Message { get; set; }
     }
 }

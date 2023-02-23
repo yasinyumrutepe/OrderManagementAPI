@@ -1,8 +1,11 @@
 ﻿using AutoMapper;
+using Azure;
 using MediatR;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using OrderManagementAPI.Application.Features.Commands.Company.CreateCompany;
+using OrderManagementAPI.Application.Features.Commands.Company.UpdateApproveStatusCompany;
+using OrderManagementAPI.Application.Features.Commands.Company.UpdateOrderTimeCompany;
 using OrderManagementAPI.Application.Features.Queries.Company.GetAllCompany;
 using OrderManagementAPI.Application.Repositories;
 using OrderManagementAPI.Domain.Entities;
@@ -13,13 +16,11 @@ namespace OrderManagementAPI.API.Controllers
     [ApiController]
     public class CompaniesController : ControllerBase
     {   
-        readonly private ICompanyWriteRepository _companyWriteRepository;
-        readonly private ICompanyReadRepository _companyReadRepository;
+      
         readonly IMediator _mediator;
         public CompaniesController(ICompanyWriteRepository companyWriteRepository, ICompanyReadRepository companyReadRepository, IMediator mediator, IMapper mapper)
         {
-            _companyWriteRepository = companyWriteRepository;
-            _companyReadRepository = companyReadRepository;
+         
             _mediator = mediator;
         }
 
@@ -41,40 +42,28 @@ namespace OrderManagementAPI.API.Controllers
 
 
         }
-        [HttpPut("approve-status/{id}")]
-        public async Task<IActionResult> UpdateApproveStatusCompany(int id)
+        [HttpPut("approve-status")]
+        public async Task<IActionResult> UpdateApproveStatusCompany(UpdateApproveStatusCompanyCommandRequest updateApproveStatusCompanyCommandRequest)
         {   
-               var company = await _companyReadRepository.GetByIdAsync(id);
-                if(company == null)
+            var response = await _mediator.Send(updateApproveStatusCompanyCommandRequest);
+            if (response.IsUpdate)
             {
-                return BadRequest("Company Not Found");
+                return Ok(response);
+
+            }else
+            {
+                return BadRequest(response.Message);
             }
-
-            return Ok(id);
-
-
 
         }
-        [HttpPut("order-time/{id}")]
-        public async Task<IActionResult> UpdateOrderTimeCompany(int id)
+        [HttpPut("order-time")]
+        public async Task<IActionResult> UpdateOrderTimeCompany(UpdateOrderTimeCompanyCommandRequest updateOrderTimeCompanyCommandRequest)
         {
-            if (id == 0)
-            {
-                return BadRequest("Id Required");
-            }
 
-            var c = await _companyReadRepository.GetByIdAsync(id);
+            var response = await _mediator.Send(updateOrderTimeCompanyCommandRequest);
+           
 
-            if (c == null)
-            {
-                return NotFound();
-
-            }
-
-            var newcompany = _companyWriteRepository.Update(c);
-            await _companyWriteRepository.SaveAsync();
-
-            return Ok(newcompany);
+            return Ok(response);
         }
     }
 }

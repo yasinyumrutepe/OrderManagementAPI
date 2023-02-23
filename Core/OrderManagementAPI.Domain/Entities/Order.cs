@@ -12,7 +12,7 @@ namespace OrderManagementAPI.Domain.Entities
         public int CompanyId { get; set; }
         public int ProductId { get; set; }
         public string OrdererName { get; set; }
-
+        public string OrderTime { get; set; }
         public ICollection<Product> Products { get; set; }
         public Company Company { get; set; }
     }

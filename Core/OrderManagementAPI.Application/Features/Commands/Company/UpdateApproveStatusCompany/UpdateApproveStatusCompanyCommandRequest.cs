@@ -9,5 +9,6 @@ namespace OrderManagementAPI.Application.Features.Commands.Company.UpdateApprove
 {
     public class UpdateApproveStatusCompanyCommandRequest:IRequest<UpdateApproveStatusCompanyCommandResponse>
     {
+        public int Id { get; set; }
     }
 }

@@ -1,5 +1,7 @@
-﻿using Microsoft.AspNetCore.Http;
+﻿using MediatR;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using OrderManagementAPI.Application.Features.Commands.Order.CreateOrder;
 
 namespace OrderManagementAPI.API.Controllers
 {
@@ -7,10 +9,18 @@ namespace OrderManagementAPI.API.Controllers
     [ApiController]
     public class OrdersController : ControllerBase
     {
-        [HttpPost]
-        public IActionResult Add()
+        readonly IMediator _mediator;
+
+        public OrdersController(IMediator mediator)
         {
-            return Ok("Create Order");
+            _mediator = mediator;
+        }
+
+        [HttpPost]
+        public async Task<IActionResult> AddOrder(CreateOrderCommandRequest createOrderCommandRequest)
+        { 
+            var result = await _mediator.Send(createOrderCommandRequest);
+            return Ok(result);
         }
     }
 }

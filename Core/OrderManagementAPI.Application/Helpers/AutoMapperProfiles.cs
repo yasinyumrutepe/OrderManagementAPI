@@ -13,8 +13,8 @@ namespace OrderManagementAPI.Application.Helpers
     {
         public GeneralMapping()
         {
-            CreateMap<Company, GetAllCompanyQueryResponse>()
-                .ReverseMap();
+            CreateMap<Company, GetAllCompanyQueryResponse>();
+          
            
         }
     }

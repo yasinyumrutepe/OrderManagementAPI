@@ -18,7 +18,7 @@ namespace OrderManagementAPI.Application.Features.Commands.Company.CreateCompany
             _companyWriteRepository = companyWriteRepository;
         }
 
-        public async Task<CreateCompanyCommandResponse> Handle(CreateCompanyCommandRequest request, CancellationToken cancellationToken)
+        public async Task<CreateCompanyCommandResponse> Handle(CreateCompanyCommandRequest request ,CancellationToken cancellationToken)
         {
 
             var company = new Domain.Entities.Company();
@@ -28,18 +28,18 @@ namespace OrderManagementAPI.Application.Features.Commands.Company.CreateCompany
             company.OrderRelaseStartTime = request.OrderRelaseStartTime;
             company.OrderRelaseEndTime = request.OrderRelaseEndTime;
             company.ApprovelStatus = request.ApprovelStatus;
-
+            company.CreatedAt = DateTime.Now;
             var newcompany = await _companyWriteRepository.AddAsync(company);
-            var result = new CreateCompanyCommandResponse{
-               CompanyName =newcompany.CompanyName,
-               ApprovelStatus=newcompany.ApprovelStatus,
-               Id= newcompany.Id,
-               OrderRelaseEndTime = newcompany.OrderRelaseEndTime,
-               OrderRelaseStartTime = newcompany.OrderRelaseStartTime
-
-            };
+            
             await _companyWriteRepository.SaveAsync();
-            return result;
+
+           
+            return new()
+            {
+                Company=newcompany,
+                IsCreated=true,
+                Message="Company Created Succesfully"
+            };
         }
     }
 }

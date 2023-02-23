@@ -8,10 +8,10 @@ namespace OrderManagementAPI.Application.Features.Commands.Company.CreateCompany
 {
     public class CreateCompanyCommandResponse
     {
-        public int Id { get; set; }
-        public string CompanyName { get; set; }
-        public bool ApprovelStatus { get; set; }
-        public string OrderRelaseStartTime { get; set; }
-        public string OrderRelaseEndTime { get; set; }
+        public Domain.Entities.Company Company { get; set; }
+        public bool IsCreated { get; set; }
+        public string Message { get; set; }
+
+
     }
 }
